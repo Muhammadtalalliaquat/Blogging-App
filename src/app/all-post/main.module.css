@@ -1,0 +1,188 @@
+
+.title_date_contanier{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title_post{
+  margin-bottom: 10px; 
+  display: flex;
+  justify-content: space-between;
+}
+
+.postImage {
+  border-radius: 5px; 
+  margin-bottom: 10px;
+  background-size: contain;
+  object-fit: cover;   
+}
+.posts {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+  .post {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  .post:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .h1_heading {
+    font-size: 22px;
+    font-weight: bold;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 85px;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    letter-spacing: 1.5px;
+    border-bottom: 2px solid #007bff;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #3f3f3f, #595959);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .post h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .post p {
+    font-size: 1rem;
+    color: #666;
+    margin: 10px 0;
+  }
+  
+  .post span {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+  
+  .tags {
+    margin-right: auto;
+    font-size: 0.875rem;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  
+  .tagsAndButtons {
+    display: flex;
+    align-items: center;
+  }
+
+  
+  .button {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    margin-left: 8px;
+  }
+  
+  .edit {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .edit:hover {
+    background-color: #45a049;
+  }
+  
+  .delete {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .delete:hover {
+    background-color: #e53935;
+  }
+  
+  .no_posts {
+    text-align: center;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 20px;
+    border-radius: 6px;
+    color: #856404;
+    margin-top: 20px;
+  }
+  
+  #navbar{
+    background: linear-gradient(90deg, #5b5b5b, #22afe3);
+    color: White;
+    box-shadow: 1px 1px 9px  #727273;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    z-index: 1000;
+  }
+  #navbar li a{
+    color: #525252;
+    font-weight: bold;
+    transition: 0.3s;
+    border-radius: 10px;
+  }
+  #navbar li a:hover{
+    background: linear-gradient(90deg, #5b5b5b, #22afe3);
+    color: White;
+  }
+
+.sign_Out_Button {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sign_Out_Button:hover {
+  background-color: #ffffff;
+  color: #222;
+}
+
+.sign_Out_Button:active {
+  background-color: #e0e0e0;
+}
+
+#loader{
+  background: linear-gradient(90deg, #5b5b5b, #22afe3);
+}
+
+@media (max-width: 600px) {
+  .h1_heading{
+    font-size: 22px;
+    text-align: center; 
+    margin: 15px 0;
+    padding-top: 30px;
+    width: 90%;
+    margin: 0 auto;
+  }
+}
