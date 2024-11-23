@@ -1,6 +1,6 @@
 "use client";
 
-import { collection, DocumentData, getDocs } from "firebase/firestore";
+import { collection, DocumentData, onSnapshot, query, Unsubscribe } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styles from "../all-post/main.module.css";
 import { db } from "@/firebase/firebaseconfig";
@@ -22,23 +22,57 @@ export default function HomePage() {
     fetcLoadingData();
     fetchPostData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {
+      if (readRealTimeListner) {
+        console.log("Component Unmount");
+        readRealTimeListner();
+      }
+    }
   }, []);
 
-  const fetchPostData = async () => {
+  let readRealTimeListner: Unsubscribe | null = null;
+
+  const fetchPostData = () => {
     const collectionRef = collection(db, "posts");
-    const postData = await getDocs(collectionRef);
-    const allPostData = postData.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setAllPost(allPostData);
+    const q = query(collectionRef);
+
+    readRealTimeListner = onSnapshot(
+      q,
+      (snapshot) => {
+        const postsArray: DocumentData[] = [];
+        snapshot.forEach((doc) => {
+          const postData = doc.data();
+          postData.id = doc.id;
+          postsArray.push(postData);
+        });
+        // Sort posts by createdAt or timestamp to ensure the newest posts are on top
+        postsArray.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
+        setAllPost(postsArray);
+      },
+      (err) => {
+        console.warn(err);
+      }
+    );
   };
+
+  // const fetchPostData = async () => {
+  //   const collectionRef = collection(db, "posts");
+  //   const postData = await getDocs(collectionRef);
+  //   const allPostData = postData.docs.map((doc) => ({
+  //     id: doc.id,
+  //     ...doc.data(),
+  //   }));
+  //   setAllPost(allPostData);
+  // };
+
+
 
   return (
     <>
+      <NavBar />
       {Loading ? (
         <>
-          <NavBar />
           <h1 className={styles.h1_heading}>All Posts Here</h1>
           <br />
 
@@ -89,7 +123,6 @@ export default function HomePage() {
             )}
           </div>
 
-          <Footer />
         </>
       ) : (
         <div
@@ -103,6 +136,12 @@ export default function HomePage() {
           <span id={styles.loader} className="loading loading-spinner loading-lg"></span>
         </div>
       )}
+
+      <br />
+      <br />
+
+      <Footer />
+
     </>
   );
 }

@@ -11,6 +11,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "@/firebase/firebaseconfig";
 import { doc, setDoc } from "firebase/firestore";
 import style from "../components/main.module.css";
+import Footer from "./footer";
 
 export default function AdminPostForm() {
   const converter = new Showdown.Converter();
@@ -191,6 +192,10 @@ export default function AdminPostForm() {
         <br />
         {error && <p className={style.error_message}>{error}</p>}
       </form>
+      <br />
+      <br />
+
+      <Footer />
     </>
   );
 }

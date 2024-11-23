@@ -36,6 +36,8 @@ export default function NavBar() {
     if (user) {
       if (user.role === "admin" && pathname !== "/home") {
         router.push("/home");
+      } else if(user.role === "admin" && pathname !== "/AdminDashBorad") {
+        router.push("/AdminDashBorad");
       } else if (user.role !== "admin" && pathname === "/home") {
         router.push("/signup");
       } else if (
@@ -103,7 +105,7 @@ export default function NavBar() {
                       ? "Signup"
                       : pathname.startsWith("/post-details")
                       ? "Home"
-                      : "Signup"
+                      : "Create Post"
                     : "Signup"}
                 </a>
               </li>
@@ -123,7 +125,6 @@ export default function NavBar() {
           {user ? (
                <button
                className={style.sign_Out_Button}
-               // className="btn btn-outline"
                onClick={() => {
                  signOutUser(auth);
                }}

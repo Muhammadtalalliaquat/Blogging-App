@@ -113,10 +113,10 @@ export default function PostDetails({
 
   return (
     <>
+      <NavBar />
+
       {Loading ? (
         <>
-          <NavBar />
-
           <h1 className={style.h1_heading}>Blog Post</h1>
           <br />
           <div className={style.posts}>
@@ -225,6 +225,7 @@ export default function PostDetails({
                           backgroundColor: "white",
                           paddingLeft: "20px",
                           paddingRight: "20px",
+                          paddingTop: "10px",
                           overflowY: "scroll",
                           overflowX: "hidden",
                         }}
@@ -360,7 +361,6 @@ export default function PostDetails({
             )}
           </div>
 
-          <Footer />
         </>
       ) : (
         <div
@@ -377,6 +377,10 @@ export default function PostDetails({
           ></span>
         </div>
       )}
+
+      <br />
+      <br />
+      <Footer />
     </>
   );
 }

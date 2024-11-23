@@ -18,6 +18,7 @@ import { useCallback, useEffect, useState } from "react";
 import style from "../all-post/main.module.css";
 import { delectPostItems } from "@/firebase/firebasestore";
 import Link from "next/link";
+import Footer from "@/components/footer";
 
 type userType = {
   email: string | null;
@@ -28,13 +29,21 @@ type userType = {
 export default function FetchAllPost() {
   const [allPost, setAllPost] = useState<DocumentData[]>([]);
   const [user, setUser] = useState<null | userType>(null);
+  const [Loading, setLoading] = useState(false);
+
+  const fetcLoadingData = () => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 2000);
+  };
 
   let readRealTimeListner: Unsubscribe | null = null;
 
   useEffect(() => {
+    fetcLoadingData();
     const detchOnAuthSateListner = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        fetchExpnseRealTime(currentUser.uid);
+        fetchPostRealTime(currentUser.uid);
         setUser(currentUser);
       } else {
         console.log(user, "user not found");
@@ -53,7 +62,7 @@ export default function FetchAllPost() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchExpnseRealTime = (userID: string) => {
+  const fetchPostRealTime = (userID: string) => {
     const collectionRef = collection(db, "posts");
     const condition = where("author", "==", userID);
     const q = query(collectionRef, condition);
@@ -101,6 +110,8 @@ export default function FetchAllPost() {
             console.log("Removed post: ", postData);
           }
         });
+        allPostClone.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
+        setAllPost(allPostClone);
       },
       (err) => {
         console.warn(err);
@@ -141,80 +152,101 @@ export default function FetchAllPost() {
       <h1 className={style.h1_heading}>All Posts Here</h1>
       <br />
 
-      <div className={style.posts}>
-        {allPost.length > 0 ? (
-          <div>
-            {allPost.map(
-              (
-                { title, content, tags, imageUrl, createdAt, lastEditedAt, id },
-                index
-              ) => (
-                <div key={index} className={style.post}>
-                  <div className={style.title_date_contanier}>
-                    <div className={style.title_post}>
-                      <h2
-                        style={{
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          margin: "0px",
-                        }}
-                      >
-                        {title}
-                      </h2>
+      {
+        Loading ? (
+          <><div className={style.posts}>
+            {allPost.length > 0 ? (
+              <div>
+                {allPost.map(
+                  (
+                    { title, content, tags, imageUrl, createdAt, lastEditedAt, id },
+                    index
+                  ) => (
+                    <div key={index} className={style.post}>
+                      <div className={style.title_date_contanier}>
+                        <div className={style.title_post}>
+                          <h2
+                            style={{
+                              fontSize: "20px",
+                              fontWeight: "bold",
+                              margin: "0px",
+                            }}
+                          >
+                            {title}
+                          </h2>
 
-                      {lastEditedAt ? (
-                        <p style={{ fontSize: "11px", color: "#888" }}>
-                          edit post on: {formateDate(lastEditedAt)}
-                        </p>
-                      ) : (
-                        <p style={{ fontSize: "11px" }}>
-                          Posted on: {formateDate(createdAt)}
-                        </p>
-                      )}
+                          {lastEditedAt ? (
+                            <p style={{ fontSize: "11px", color: "#888" }}>
+                              edit post on: {formateDate(lastEditedAt)}
+                            </p>
+                          ) : (
+                            <p style={{ fontSize: "11px" }}>
+                              Posted on: {formateDate(createdAt)}
+                            </p>
+                          )}
+                        </div>
+                        {imageUrl && (
+                          <Image
+                            src={imageUrl}
+                            alt={`Image for ${title}`}
+                            width={600}
+                            height={400}
+                            className={style.postImage}
+                            priority />
+                        )}
+                      </div>
+                      <p>
+                        <b>Content: </b>
+                        {content}
+                      </p>
+                      <div className={style.tagsAndButtons}>
+                        <span className={style.tags}>Tags: {tags}</span>
+                        <div>
+                          <Link href={`/editPost/${id}`}>
+                            <button className={`${style.button} ${style.edit}`}>
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            onClick={() => {
+                              delectPostItems(id);
+                            }}
+                            className={`${style.button} ${style.delete}`}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    {imageUrl && (
-                      <Image
-                        src={imageUrl}
-                        alt={`Image for ${title}`}
-                        width={600}
-                        height={400}
-                        className={style.postImage}
-                        priority
-                      />
-                    )}
-                  </div>
-                  <p>
-                    <b>Content: </b>
-                    {content}
-                  </p>
-                  <div className={style.tagsAndButtons}>
-                    <span className={style.tags}>Tags: {tags}</span>
-                    <div>
-                      <Link href={`/editPost/${id}`}>
-                        <button className={`${style.button} ${style.edit}`}>
-                          Edit
-                        </button>
-                      </Link>
-                      <button
-                        onClick={() => {
-                          delectPostItems(id);
-                        }}
-                        className={`${style.button} ${style.delete}`}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )
+                  )
+                )}
+              </div>
+            ) : (
+              <div className={style.no_posts}>
+                <p>No posts available.</p>
+              </div>
             )}
           </div>
+
+          <br />
+          <br />
+
+            <Footer />
+          </>
+
         ) : (
-          <div className={style.no_posts}>
-            <p>No posts available.</p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "70vh",
+            }}
+          >
+            <span id={style.loader} className="loading loading-spinner loading-lg"></span>
           </div>
-        )}
-      </div>
+        )
+      }
     </>
   );
 }

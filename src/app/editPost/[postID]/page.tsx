@@ -18,6 +18,7 @@ import Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import style from "../../../components/main.module.css";
+import Footer from "@/components/footer";
 
 type PostType = {
   title: string;
@@ -181,6 +182,11 @@ export default function EditPosts({
     <>
       <NavBar />
       <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
       <h2
         style={{
           fontSize: "24px",
@@ -266,6 +272,11 @@ export default function EditPosts({
         </button>
         <br />
       </form>
+
+      <br />
+      <br />
+
+      <Footer />
     </>
   );
 }
