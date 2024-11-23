@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Blog App link is here: [https://blog-crafted-app.vercel.app/get-started]
+Blog App link is here: [ https://blogging-app-tawny.vercel.app/get-started ]
 
 ## Getting Started
 
