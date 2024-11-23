@@ -286,7 +286,7 @@ export default function PostDetails({
                                 >
                                   <span
                                     style={{
-                                      color: "#242423",
+                                      color: " #000000",
                                       fontSize: "14px",
                                       fontWeight: "lighter",
                                     }}
