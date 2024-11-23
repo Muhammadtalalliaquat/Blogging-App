@@ -288,7 +288,7 @@ export default function PostDetails({
                                     style={{
                                       color: " #000000",
                                       fontSize: "14px",
-                                      fontWeight: "lighter",
+                                      fontWeight: "bold",
                                     }}
                                   >
                                     {text}
