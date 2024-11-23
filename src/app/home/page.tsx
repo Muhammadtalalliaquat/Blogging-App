@@ -21,7 +21,6 @@ export default function HomePage() {
   useEffect(() => {
     fetcLoadingData();
     fetchPostData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     return () => {
       if (readRealTimeListner) {
@@ -29,6 +28,7 @@ export default function HomePage() {
         readRealTimeListner();
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let readRealTimeListner: Unsubscribe | null = null;
@@ -46,7 +46,6 @@ export default function HomePage() {
           postData.id = doc.id;
           postsArray.push(postData);
         });
-        // Sort posts by createdAt or timestamp to ensure the newest posts are on top
         postsArray.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
         setAllPost(postsArray);
       },
@@ -56,15 +55,6 @@ export default function HomePage() {
     );
   };
 
-  // const fetchPostData = async () => {
-  //   const collectionRef = collection(db, "posts");
-  //   const postData = await getDocs(collectionRef);
-  //   const allPostData = postData.docs.map((doc) => ({
-  //     id: doc.id,
-  //     ...doc.data(),
-  //   }));
-  //   setAllPost(allPostData);
-  // };
 
 
 
